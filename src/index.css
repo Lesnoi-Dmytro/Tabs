@@ -1,0 +1,11 @@
+:root {
+    --primary: #007bff;
+    --secondary: #007bff;
+    --accent: #007bff;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+}
