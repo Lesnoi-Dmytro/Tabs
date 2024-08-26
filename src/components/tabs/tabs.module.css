@@ -4,13 +4,16 @@
 }
 
 .tabs {
-    position: relative;
     display: flex;
     width: 100%;
     background-color: var(--secondary);
     cursor: pointer;
     overflow-x: auto;
-    overflow-y: auto;
+    overflow-y: visible;
+}
+
+.tabs a {
+    text-decoration: none;
 }
 
 .tabs::-webkit-scrollbar {
@@ -53,10 +56,16 @@
     text-decoration: none;
 }
 
+.mainTab *,
+.dropDownContent:hover * {
+    color: var(--secondary-text);
+}
+
 .mainTab:hover,
+.dropDownContent:hover,
 .mainTabClicked {
     background-color: var(--secondary);
-    color: #343434;
+    color: var(--primary-text);
 }
 
 .mainTabClicked {
@@ -64,7 +73,9 @@
     border-radius: 3px;
 }
 
-.mainTabClicked .tab {
+.mainTab:hover *,
+.dropDownContent:hover *,
+.mainTabClicked * {
     color: var(--primary-text);
 }
 
@@ -115,10 +126,15 @@
 }
 
 .dropDownContent {
-    /*display: inline-block;*/
-    position: absolute;
+    position: fixed;
+    width: fit-content;
     background-color: var(--primary);
     z-index: 6;
+}
+
+.dropDownContent a {
+    display: inline-block;
+    padding: 8px;
 }
 
 .reversed {

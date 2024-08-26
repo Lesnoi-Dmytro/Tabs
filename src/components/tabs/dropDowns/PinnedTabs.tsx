@@ -8,22 +8,26 @@ import {Link} from "react-router-dom";
 const PinnedTabs = () => {
     const context = useContext(TabsContext);
 
+    const isShown = () => {
+        return context.data.clickedIndex === -1;
+    }
+
     return (
         <div className={styles.dropDownElement}>
             <div className={`${styles.mainTab}
-            ${context.data.clickedIndex === -1 ? styles.mainTabClicked : ''}
+            ${isShown() ? styles.mainTabClicked : ''}
             ${styles.pinnedTab}
             ${styles.pinnedLeft}`}
                  onClick={() => context.setters.setClickedIndex(-1)}>
                 <FontAwesomeIcon icon='box'/>
             </div>
-            <div className={`${styles.dropDownContent}`}>
+            {isShown() && <div className={`${styles.dropDownContent}`}>
                 {context.data.pinnedTabs.map(tab =>
                     <Link to={tab.path} key={tab.id}>
                         <Tab tab={tab}/>
                     </Link>
                 )}
-            </div>
+            </div>}
         </div>
     )
 }
