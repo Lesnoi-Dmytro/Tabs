@@ -1,11 +1,11 @@
-import PinnedTabs from "./pinnedTabs/PinnedTabs.tsx";
+import PinnedTabs from "./dropDowns/PinnedTabs.tsx";
 import {ITab} from "../../interfaces/ITab.ts";
 import styles from './tabs.module.css';
 import MainTab from "./MainTab.tsx";
 import {useEffect, useState} from "react";
 import TabsContext from "../../utils/contexts/TabsContext.ts";
 import {ITabsContext} from "../../interfaces/ITabsContext.ts";
-import DropDown from "./pinnedTabs/DropDown.tsx";
+import DropDown from "./dropDowns/DropDown.tsx";
 import TabsService from "../../services/TabsService.ts";
 
 const tabsService = new TabsService();

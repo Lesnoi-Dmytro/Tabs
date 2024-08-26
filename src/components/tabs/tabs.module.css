@@ -4,7 +4,9 @@
 }
 
 .tabs {
+    position: relative;
     display: flex;
+    width: 100%;
     background-color: var(--secondary);
     cursor: pointer;
     overflow-x: auto;
@@ -39,8 +41,12 @@
     padding-right: 8px;
 }
 
-.mainTab {
+.mainTabWrapper {
     position: relative;
+}
+
+.mainTab {
+    display: inline-block;
     padding: var(--padding);
     background-color: var(--primary);
     border-top: var(--secondary) solid var(--border-width);
@@ -63,10 +69,19 @@
 }
 
 .mainTabDragged {
-    background-color: var(--darken) !important;
-    border-radius: 0;
-    border: none;
+    opacity: 0;
+}
+
+.draggedTab {
+    position: absolute;
+    padding: var(--padding);
+    pointer-events: none;
+    background-color: var(--darken);
     z-index: 1;
+}
+
+.draggedTab .tab {
+    color: var(--primary);
 }
 
 .pinnedTab {

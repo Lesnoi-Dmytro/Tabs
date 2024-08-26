@@ -1,11 +1,12 @@
 import {ITab} from "../../interfaces/ITab.ts";
 import styles from './tabs.module.css';
 import Tab from "./Tab.tsx";
-import {DragEvent, useContext, useEffect, useRef, useState} from "react";
+import React, {DragEvent, useContext, useEffect, useRef, useState} from "react";
 import {ITabsContext} from "../../interfaces/ITabsContext.ts";
 import TabsContext from "../../utils/contexts/TabsContext.ts";
 import {Link} from "react-router-dom";
 import ContextMenu from "./ContextMenu.tsx";
+import DraggedTab from "./DraggedTab.tsx";
 
 const MainTab = ({clicked, tab, index}: { clicked: boolean, tab: ITab, index: number }) => {
     const context = useContext<ITabsContext>(TabsContext);
@@ -33,13 +34,13 @@ const MainTab = ({clicked, tab, index}: { clicked: boolean, tab: ITab, index: nu
 
     const [dragged, setDragged] = useState(false);
 
-    const handleOnClick = (e: MouseEvent) => {
+    const handleOnClick = (e: React.MouseEvent) => {
         if (e.button === 0) {
             context.setters.setClickedIndex(index)
         }
     }
 
-    const handleContextMenu = (e: MouseEvent) => {
+    const handleContextMenu = (e: React.MouseEvent) => {
         e.preventDefault();
         setShowContext(true);
         setContextXPos(e.clientX);
@@ -57,8 +58,9 @@ const MainTab = ({clicked, tab, index}: { clicked: boolean, tab: ITab, index: nu
     }
 
     const handleDragMove = (e: DragEvent<HTMLAnchorElement>) => {
-        setXPos(e.clientX - mouseStartPos.current[0]);
-        setYPos(e.clientY - mouseStartPos.current[1]);
+        const rect = e.currentTarget.getBoundingClientRect();
+        setXPos(e.clientX - rect.left);
+        setYPos(e.clientY - rect.top);
     }
 
     const handleDragEnd = () => {
@@ -67,9 +69,8 @@ const MainTab = ({clicked, tab, index}: { clicked: boolean, tab: ITab, index: nu
         setYPos(0);
     }
 
-    const handleDrop = () => {
+    const handleDragEnter = () => {
         const draggedIndex = context.data.clickedIndex;
-        const dragged = context.data.mainTabs[draggedIndex];
 
         if (draggedIndex === index) {
             return;
@@ -78,8 +79,20 @@ const MainTab = ({clicked, tab, index}: { clicked: boolean, tab: ITab, index: nu
         context.setters.setMainTabs((prev) => {
             const newTabs = [...prev];
 
-            newTabs[index] = dragged;
-            newTabs[draggedIndex] = tab;
+            if (draggedIndex > index) {
+                for (let i = draggedIndex; i > index; i--) {
+                    const saveTab = newTabs[i];
+                    newTabs[i] = newTabs[i - 1];
+                    newTabs[i - 1] = saveTab;
+                }
+            } else {
+                for (let i = draggedIndex; i < index; i++) {
+                    const saveTab = newTabs[i];
+                    newTabs[i] = newTabs[i + 1];
+                    newTabs[i + 1] = saveTab;
+                }
+            }
+
 
             return newTabs;
         });
@@ -88,29 +101,25 @@ const MainTab = ({clicked, tab, index}: { clicked: boolean, tab: ITab, index: nu
     }
 
     return (
-        <>
+        <div className={styles.mainTabWrapper}>
             <Link to={tab.path}
                   draggable='true'
                   className={`${styles.mainTab} 
                 ${clicked ? styles.mainTabClicked : ''}
                 ${dragged ? styles.mainTabDragged : ''}`}
-                  style={{
-                      top: yPos,
-                      left: xPos
-                  }}
                   onMouseDown={handleOnClick}
                   onContextMenu={handleContextMenu}
                   onDragStart={handleDragStart}
                   onDrag={handleDragMove}
                   onDragEnd={handleDragEnd}
                   onDragOver={(e) => e.preventDefault()}
-                  onDrop={handleDrop}
-            >
+                  onDragEnter={handleDragEnter}>
                 <Tab tab={tab}/>
             </Link>
             <ContextMenu index={index} show={showContext}
                          xPos={contextXPos} yPos={contextYPos}/>
-        </>
+            {dragged && <DraggedTab tab={tab} xPos={xPos} yPos={yPos}/>}
+        </div>
     )
 }
 

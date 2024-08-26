@@ -10,7 +10,7 @@ const DropDown = () => {
                         ${styles.pinnedRight}
                         ${styles.dropDown}`}
              onClick={() => setClicked((prev) => !prev)}>
-            <FontAwesomeIcon className={clicked ? styles.reversed : ''} icon={'arrow-up'}/>
+            <FontAwesomeIcon className={clicked ? '' : styles.reversed} icon={'arrow-up'}/>
         </div>
     )
 }
