@@ -43,8 +43,9 @@ const MainTab = ({clicked, tab, index}: { clicked: boolean, tab: ITab, index: nu
     const handleContextMenu = (e: React.MouseEvent) => {
         e.preventDefault();
         setShowContext(true);
-        setContextXPos(e.clientX);
-        setContextYPos(e.clientY);
+        const rect = e.currentTarget.getBoundingClientRect();
+        setContextXPos(e.clientX - rect.left);
+        setContextYPos(e.clientY - rect.top);
     }
 
     const handleDragStart = (e: DragEvent<HTMLAnchorElement>) => {

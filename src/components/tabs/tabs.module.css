@@ -10,7 +10,7 @@
     background-color: var(--secondary);
     cursor: pointer;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 
 .tabs::-webkit-scrollbar {
@@ -115,7 +115,7 @@
 }
 
 .dropDownContent {
-    display: inline-block;
+    /*display: inline-block;*/
     position: absolute;
     background-color: var(--primary);
     z-index: 6;

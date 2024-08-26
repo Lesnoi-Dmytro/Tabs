@@ -3,6 +3,7 @@ import {useContext} from "react";
 import TabsContext from "../../../utils/contexts/TabsContext.ts";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Tab from "../Tab.tsx";
+import {Link} from "react-router-dom";
 
 const PinnedTabs = () => {
     const context = useContext(TabsContext);
@@ -18,7 +19,10 @@ const PinnedTabs = () => {
             </div>
             <div className={`${styles.dropDownContent}`}>
                 {context.data.pinnedTabs.map(tab =>
-                    <Tab tab={tab} key={tab.id}/>)}
+                    <Link to={tab.path} key={tab.id}>
+                        <Tab tab={tab}/>
+                    </Link>
+                )}
             </div>
         </div>
     )
