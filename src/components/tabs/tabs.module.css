@@ -1,0 +1,122 @@
+:root {
+    --border-width: 1px;
+    --padding: 12px;
+}
+
+.tabs {
+    display: flex;
+    background-color: var(--secondary);
+    cursor: pointer;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.tabs::-webkit-scrollbar {
+    background-color: var(--primary);
+    height: 8px;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+    background-color: var(--darken);
+    border-radius: 4px;
+}
+
+.tab {
+    display: flex;
+    align-items: baseline;
+    max-width: 10vw;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: var(--secondary-text);
+    text-overflow: ellipsis;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tabIcon {
+    padding-right: 8px;
+}
+
+.mainTab {
+    position: relative;
+    padding: var(--padding);
+    background-color: var(--primary);
+    border-top: var(--secondary) solid var(--border-width);
+    text-decoration: none;
+}
+
+.mainTab:hover,
+.mainTabClicked {
+    background-color: var(--secondary);
+    color: #343434;
+}
+
+.mainTabClicked {
+    border-top: var(--accent) solid 3px;
+    border-radius: 3px;
+}
+
+.mainTabClicked .tab {
+    color: var(--primary-text);
+}
+
+.mainTabDragged {
+    background-color: var(--darken) !important;
+    border-radius: 0;
+    border: none;
+    z-index: 1;
+}
+
+.pinnedTab {
+    position: sticky;
+    z-index: 2;
+}
+
+.pinnedLeft {
+    left: 0;
+}
+
+.pinnedRight {
+    right: 0;
+}
+
+.dropDown {
+    display: flex;
+    align-items: center;
+    padding: var(--padding);
+    background-color: var(--accent);
+    color: var(--primary);
+}
+
+.dropDown svg {
+    transition: transform ease-in-out 0.6s;
+}
+
+.dropDownElement {
+    position: relative;
+    height: 100%;
+}
+
+.dropDownContent {
+    display: inline-block;
+    position: absolute;
+    background-color: var(--primary);
+    z-index: 6;
+}
+
+.reversed {
+    transform: rotateZ(180deg);
+}
+
+.contextMenu {
+    position: absolute;
+    background-color: var(--primary);
+    display: flex;
+    z-index: 2;
+    color: var(--primary-text);
+    border-radius: 2px;
+    padding: var(--padding);
+    box-shadow: 0 2px 2px;
+}

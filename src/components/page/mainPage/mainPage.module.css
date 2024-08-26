@@ -1,0 +1,7 @@
+.mainPage {
+    height: 80vh;
+    width: 100%;
+    background-color: var(--primary);
+    border-radius: 6px;
+}
+
